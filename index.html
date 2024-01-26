@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shakey Mesi Drum Machine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+    <h1>Shakey Mesi Machine</h1>
+
+    <canvas id="waveformCanvas" width="400" height="100"></canvas>
+    <div id="drum-samples" class="d-flex flex-wrap justify-content-center">
+        <button id="kickButton" class="btn btn-primary drum-button">Kick</button>
+        <button id="snareButton" class="btn btn-primary drum-button">Snare</button>
+        <button id="lowTomButton" class="btn btn-primary drum-button">Low Tom</button>
+        <button id="midTomButton" class="btn btn-primary drum-button">Mid Tom</button>
+        <button id="hiTomButton" class="btn btn-primary drum-button">Hi Tom</button>
+        <button id="rimButton" class="btn btn-primary drum-button">Rim</button>
+        <button id="clapButton" class="btn btn-primary drum-button">Clap</button>
+        <button id="cowBellButton" class="btn btn-primary drum-button">Cowbell</button>
+        <button id="cymbalButton" class="btn btn-primary drum-button">Cymbal</button>
+        <button id="openHHButton" class="btn btn-primary drum-button">Open HH</button>
+        <button id="closedHHButton" class="btn btn-primary drum-button">Closed HH</button>
+    </div>
+
+    <div class="parameters">
+        <div>
+            <h5>Tempo</h5>
+            <label for="tempoRange">Tempo:</label>
+            <input type="range" id="tempoRange" min="60" max="240" value="120">
+            <span id="tempoValue">120 BPM</span>
+        </div>
+
+        <div>
+            <div>
+                <h5>Delay</h5>
+                <label for="delayAmount">Delay Amount: max</label>
+                <input type="range" id="delayAmount" min="0" max="5" step="0.1" value="0">
+                <label for="delayAmount">min</label>
+                <button id="toggleDelay">On/Off</button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button id="seq" class="btn btn-danger">Sequencer</button>
+        <button id="play" class="btn btn-danger">Play</button>
+        <button id="stop" class="btn btn-danger">Stop</button>
+    </div>
+
+    <div id="sequencer" class="hidden">
+        <div id="beat-grid">
+            <h2>Sequencer</h2>
+            <button id="closeBtn" class="btn btn-danger">X</button>
+            <div class="sequence" id="kick-grid-wrapper">
+                <h3>Kick</h3>
+                <div class="sequence" id="kick-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Snare</h3>
+                <div class="sequence" id="snare-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Low Tom</h3>
+                <div class="sequence" id="lowTom-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Mid Tom</h3>
+                <div class="sequence" id="midTom-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>High Tom</h3>
+                <div class="sequence" id="hiTom-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Rim Shot</h3>
+                <div class="sequence" id="rim-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Clap</h3>
+                <div class="sequence" id="clap-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Cowbell</h3>
+                <div class="sequence" id="cowbell-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Cymbal</h3>
+                <div class="sequence" id="cymbal-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Open HH</h3>
+                <div class="sequence" id="openHH-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+
+                <h3>Closed HH</h3>
+                <div class="sequence" id="closedHH-grid">
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                    <div class="step">
+                        <div class="step-inner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

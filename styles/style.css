@@ -1,0 +1,101 @@
+#drum-machine {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#drum-samples {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.sample {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#parameters {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+}
+
+.knob {
+  margin-bottom: 20px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin: 50px;
+  background-color: #f0f0f0;
+}
+
+canvas {
+  border: 2px solid #333;
+  margin-top: 20px;
+  background-color: #fff;
+}
+
+.off {
+  background-color: #00FF00;
+}
+
+.drum-button {
+  padding: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.drum-button:hover {
+  background-color: #2980b9;
+}
+
+#kick-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.step-inner {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  text-align: center;
+}
+
+.step.active .step-inner {
+  background-color: #00f;
+}
+
+.sequence {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
